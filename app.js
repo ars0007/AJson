@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -13,7 +15,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/", routes);
+app.use("/json", routes);
+
+app.get("/", (req, res) => {
+  return res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
 app.listen(PORT, () => {
   connect(mongoose)
